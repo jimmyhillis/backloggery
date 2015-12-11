@@ -1,0 +1,25 @@
+{
+  "name": "backloggery",
+  "version": "1.0.0",
+  "description": "A module for pulling your game data from Backloggery",
+  "main": "lib/backloggery.js",
+  "browser": "dist/index.js",
+  "scripts": {
+    "cli": "./node_modules/babel-cli/bin/babel-node.js bin/cli.js",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jimmy Hillis <jimmy@hillis.me>",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "request": "^2.67.0",
+    "x-ray": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.3.13",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.0.0"
+  }
+}
