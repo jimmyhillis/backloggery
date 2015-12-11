@@ -1,0 +1,14 @@
+# temp files
+
+*.log
+*.out
+*.pid
+*.gz
+*.swp
+*.ini~
+.DS_Store
+
+# vendor modules (npm + bower)
+
+npm-debug.log
+node_modules
