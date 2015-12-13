@@ -11,7 +11,7 @@ gulp.task('es2015', function () {
     .pipe(babel({
       presets: ['es2015'],
     }))
-    .pipe(gulp.dest('lib'));
+    .pipe(gulp.dest('.'));
 });
 
 gulp.task('default', ['es2015']);

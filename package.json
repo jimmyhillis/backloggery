@@ -13,6 +13,7 @@
   "author": "Jimmy Hillis <jimmy@hillis.me>",
   "license": "MIT",
   "dependencies": {
+    "concat-stream": "^1.5.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "minimist": "^1.2.0",
