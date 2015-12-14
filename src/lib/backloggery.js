@@ -1,8 +1,12 @@
 import request from 'request';
 import Xray from 'x-ray';
 
+// noop function when not provided a callback
+function noop() {}
+
 export class Game {
-  constructor({ title=null, system=null, originalSystem=null, note=null, isCompleted=false, rating=null }) {
+  constructor({ title = null, system = null, originalSystem = null,
+                note = null, isCompleted = false, rating = null }) {
     this.title = title;
     this.system = system;
     this.originalsystem = originalSystem;
@@ -29,7 +33,7 @@ function getCompletionFromImages(images) {
 function getRaitingFromImages(images) {
   for (let x = 0; x < images.length; x++) {
     const image = images[x];
-    const ratingMatch = image.match(/images\/(\d)_5stars.gif/)
+    const ratingMatch = image.match(/images\/(\d)_5stars.gif/);
     if (ratingMatch) {
       return parseInt(ratingMatch[1], 10);
     }
@@ -46,7 +50,7 @@ function scrape(html, callback) {
   const scraper = xray(html, '.gamebox', [{
     title: 'h2 b',
     system: '.gamerow b',
-    images: ['img@src']
+    images: ['img@src'],
   }]);
   scraper((err, data) => {
     if (err) {
@@ -54,16 +58,16 @@ function scrape(html, callback) {
     }
     return callback(null, data
       // remove all games without a title
-      .filter(({ title=null }) => !!title)
+      .filter(({ title = null }) => !!title)
       // map scrape into a sane Game object
-      .map(({ title='', system='', images=[] }) => {
-        const systemMatch = system.match(/\((.*?)\)/)
+      .map(({ title = '', system = '', images = [] }) => {
+        const systemMatch = system.match(/\((.*?)\)/);
         const game = new Game({
           title: title.trim(),
           system: system.trim(),
           originalSystem: systemMatch ? system[1] : null,
           isCompleted: getCompletionFromImages(images),
-          rating: getRaitingFromImages(images)
+          rating: getRaitingFromImages(images),
         });
         return game;
       }));
@@ -82,7 +86,7 @@ export class Backloggery {
   // @param {function} callback to pass completion to
   static request(username, options, _callback) {
     const { initialOffset = 0, limit = undefined } = !_callback && typeof options === 'function' ? {} : options;
-    const callback = _callback || options || function () {};
+    const callback = _callback || options || noop;
     let games = [];
     const url = `http://backloggery.com/ajax_moregames.php?user=${username}&console=&rating=&status=&unplayed=&own=&search=&comments=&region=&region_u=2&wish=&alpha=&temp_sys=&total=0&aid=1`;
     (function partialRequest(offset) {
@@ -116,8 +120,8 @@ export class Backloggery {
   // @param {function} callback to pass completion to
   static fromHTML(html, options, _callback) {
     const { initialOffset = 0, limit = undefined } = !_callback && typeof options === 'function' ? {} : options;
-    const callback = _callback || options || function () {};
-    return scrape(html, function (err, games) {
+    const callback = _callback || options || noop;
+    return scrape(html, (err, games) => {
       if (err) {
         return callback(err);
       }

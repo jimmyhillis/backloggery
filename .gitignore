@@ -17,3 +17,5 @@ node_modules
 
 bin/
 lib/
+!src/bin
+!srs/lib

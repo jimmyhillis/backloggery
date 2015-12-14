@@ -27,13 +27,12 @@ function outputResults(err, games) {
       games.forEach(game => console.log(`${game.title} for ${game.system} originall found on ${game.originalSystem} | ${game.isCompleted}`));
       break;
   }
-};
+}
 
 if (useStdin) {
-  process.stdin.pipe(concat(function (buf) {
+  process.stdin.pipe(concat((buf) => {
     Backloggery.fromHTML(buf.toString(), outputResults);
   }));
-}
-else {
+} else {
   Backloggery.request(user, { limit: limit }, outputResults);
 }
