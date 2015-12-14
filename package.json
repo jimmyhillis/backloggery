@@ -1,6 +1,6 @@
 {
   "name": "backloggery",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module for pulling your game data from Backloggery",
   "main": "lib/backloggery.js",
   "browser": "dist/index.js",
