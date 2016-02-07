@@ -7,7 +7,7 @@ A javascript (node + browser) module for pulling game data from [Backloggery](ht
 To use the API within your code you can use `#request` to return all the games that have been attached to a user's account.
 
 ```
-import { Backlogger } from 'backloggery';
+import { Backloggery } from 'backloggery';
 
 Backloggery.request('{{username}}', (err, games) => {
   console.log(`{{username}} has ${games.length} games`);
@@ -19,8 +19,8 @@ Each `Game` may contain:
 ```json
 {
   "title": "The name of the game, as added by the user",
-  "system": "Console (Original Console)",
-  "originalSystem": "The original system the game was released",
+  "platform": "Console (Original Console)",
+  "originalPlatform": "The original platform the game was released",
   "isCompleted": true|false,
   "rating": 1-5
 }
