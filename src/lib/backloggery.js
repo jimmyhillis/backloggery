@@ -5,11 +5,11 @@ import Xray from 'x-ray';
 function noop() {}
 
 export class Game {
-  constructor({ title = null, system = null, originalSystem = null,
+  constructor({ title = null, platform = null, originalPlatform = null,
                 note = null, isCompleted = false, rating = null }) {
     this.title = title;
-    this.system = system;
-    this.originalsystem = originalSystem;
+    this.platform = platform;
+    this.originalPlatform = originalPlatform;
     this.note = note;
     this.isCompleted = isCompleted;
     this.rating = rating;
@@ -49,7 +49,7 @@ function scrape(html, callback) {
   const xray = new Xray();
   const scraper = xray(html, '.gamebox', [{
     title: 'h2 b',
-    system: '.gamerow b',
+    platform: '.gamerow b',
     images: ['img@src'],
   }]);
   scraper((err, data) => {
@@ -60,12 +60,12 @@ function scrape(html, callback) {
       // remove all games without a title
       .filter(({ title = null }) => !!title)
       // map scrape into a sane Game object
-      .map(({ title = '', system = '', images = [] }) => {
-        const systemMatch = system.match(/\((.*?)\)/);
+      .map(({ title = '', platform = '', images = [] }) => {
+        const platformMatch = platform.match(/\((.*?)\)/);
         const game = new Game({
           title: title.trim(),
-          system: system.trim(),
-          originalSystem: systemMatch ? system[1] : null,
+          platform: platform.trim(),
+          originalPlatform: platformMatch ? platform[1] : null,
           isCompleted: getCompletionFromImages(images),
           rating: getRaitingFromImages(images),
         });
@@ -90,13 +90,13 @@ export class Backloggery {
     let games = [];
     const url = `http://backloggery.com/ajax_moregames.php?user=${username}&console=&rating=&status=&unplayed=&own=&search=&comments=&region=&region_u=2&wish=&alpha=&temp_sys=&total=0&aid=1`;
     (function partialRequest(offset) {
-      return request(`${url}&ajid=${offset}`, (err, response) => {
-        if (err) {
-          return callback(err);
+      return request(`${url}&ajid=${offset}`, (requestErr, response) => {
+        if (requestErr) {
+          return callback(requestErr);
         }
-        return scrape(response.body, (err, results) => {
-          if (err) {
-            return callback(err);
+        return scrape(response.body, (scrapeErr, results) => {
+          if (scrapeErr) {
+            return callback(scrapeErr);
           }
           if (!results.length) {
             return callback(null, games);
