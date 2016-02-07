@@ -24,7 +24,7 @@ function outputResults(err, games) {
       console.log(JSON.stringify(games));
       break;
     default:
-      games.forEach(game => console.log(`${game.title} for ${game.system} originall found on ${game.originalSystem} | ${game.isCompleted}`));
+      games.forEach(game => console.log(`${game.title} for ${game.platform} originall found on ${game.originalPlatform} | ${game.isCompleted}`));
       break;
   }
 }
@@ -34,5 +34,5 @@ if (useStdin) {
     Backloggery.fromHTML(buf.toString(), outputResults);
   }));
 } else {
-  Backloggery.request(user, { limit: limit }, outputResults);
+  Backloggery.request(user, { limit }, outputResults);
 }

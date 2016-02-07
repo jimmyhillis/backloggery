@@ -1,6 +1,3 @@
 {
-  "extends": "airbnb/base",
-  "rules": {
-    "no-shadow": [2, {"allow": ["err", "callback"]}]
-  }
+  "extends": "airbnb"
 }
